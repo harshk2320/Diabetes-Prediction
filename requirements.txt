@@ -1,0 +1,22 @@
+ipykernel
+pandas      # for data analysis
+numpy       # for mathematical calculations
+matplotlib  # for plotting graphs
+plotly      # for plotting advanced and appealing graphs and charts
+seaborn     # for plotting analytical graphs
+scikit-learn    # for machine learning operations
+pymongo         # A Python library for interacting with MongoDB, a NoSQL database.
+from_root       
+dill         # An alternative to pickle. Saving and loading machine learning models or large Python objects
+certifi     # Provides SSL certificates for secure HTTPS requests. Use Case: Ensures secure database and API communication.
+PyYAML      # Allows you to work with YAML files.
+boto3
+mypy-boto3-s3
+botocore
+fastapi
+python-multipart
+# from-root
+uvicorn
+jinja2
+imblearn
+-e .

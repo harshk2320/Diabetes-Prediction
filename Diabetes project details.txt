@@ -1,0 +1,9 @@
+Diabetes project details:
+
+MOngoDB:
+
+Username: harshkumarsingh2320
+pw: GB3bg0PNW52JD1S7
+
+Connection string:
+mongodb+srv://harshkumarsingh2320:<db_password>@cluster0.u7rk8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
