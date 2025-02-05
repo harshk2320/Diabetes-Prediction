@@ -1,13 +1,14 @@
 columns:
-- Pregnancies: int
-- Glucose: int
-- BloodPressure: int
-- SkinThickness: int
-- Insulin: int
-- BMI: float
-- DiabetesPedigreeFunction: float
-- Age: int
-- Outcome: int
+  _id: str
+  Pregnancies: int
+  Glucose: int
+  BloodPressure: int
+  SkinThickness: int
+  Insulin: int
+  BMI: float
+  DiabetesPedigreeFunction: float
+  Age: int
+  Outcome: int
 
 numerical_columns:
 - Pregnancies
@@ -20,7 +21,8 @@ numerical_columns:
 - Age
 - Outcome
 
-drop_columns: _id
+drop_columns: 
+- _id
 
 # for data transformation
 num_features:

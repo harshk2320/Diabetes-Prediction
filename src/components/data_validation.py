@@ -2,6 +2,7 @@ import json
 import sys
 import os
 import pandas as pd
+from pandas import DataFrame
 import numpy as np
 from src.exception import MyException
 from src.logger import logging
@@ -25,7 +26,7 @@ class DataValidation:
             raise MyException(e, sys) from e
         
 
-    def validate_number_of_columns(self, dataframe: pd.DataFrame) -> bool:
+    def validate_number_of_columns(self, dataframe: DataFrame) -> bool:
         """
         Method Name :   validate_number_of_columns
         Description :   This method validates the number of columns
@@ -35,13 +36,15 @@ class DataValidation:
         """
         try:
             status = len(dataframe.columns) == len(self._schema_config["columns"])
-            logging.info(f"Is requirred column present: {status}")
+            logging.info(f"Is requirred column present: [{status}]")
+            # print("dataframe_cols: ", dataframe.columns)
+            # print("_schema_cols: ",self._schema_config["columns"])
             return status
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise MyException(e, sys)
         
 
-    def is_column_exit(self, df: pd.DataFrame) -> bool:
+    def is_column_exit(self, df: DataFrame) -> bool:
         """
         Method Name :   validate_number_of_columns
         Description :   This method validates the number of columns
@@ -99,13 +102,13 @@ class DataValidation:
             # Validating the no of columns
             status = self.validate_number_of_columns(train_df)
             if not status:
-                validation_error_msg += f"columns are missing in train dataframe."
+                validation_error_msg += f"columns are missing in train dataframe: {train_df.columns}"
             else:
                 logging.info("All required columns are present in the training dataset: {status}")
 
             status = self.validate_number_of_columns(test_df)
             if not status:
-                validation_error_msg += f"columns are missing in test dataset."
+                validation_error_msg += f"columns are missing in test dataset: {test_df.columns}"
             else:
                 logging.info("All required columns are present in the test dataset: {status}")
 
