@@ -3,8 +3,18 @@ from dataclasses import dataclass       # Provides @dataclass decorator to defin
 @dataclass      # It is a python decorator which automatically generates method (__init__, __rep__).
                 # Used for storing configuration without manually writing code  
 class DataIngestionArtifact:
-    trained_file_path: str      # Path where the trained data is stored
-    test_file_path: str         # Path where test data is stored
+    trained_file_path:str      # Path where the trained data is stored
+    test_file_path:str         # Path where test data is stored
+
+
+@dataclass      # Its is a python decorator which automatically takes method (__init__, __rep__ etc)
+                # Used for storing configurations without manually writing boiler code
+
+class DataValidationArtifact:
+    validation_status:bool      
+    message:str
+    validation_report_file_path:str
+
 
 
 # @dataclass

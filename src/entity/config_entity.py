@@ -57,6 +57,13 @@ class DataIngestionConfig:
     # MongoDB collection containing the raw data
 
 
+@dataclass
+
+class DataValidationConfig:
+    data_validation_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_VALIDATION_DIR_NAME)
+    validation_report_file_path = os.path.join(data_validation_dir, DATA_VALIDATION_REPORT_FILE_NAME)
+
+
 # @dataclass
 # class DataValidationConfig:
 #     data_validation_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_VALIDATION_DIR_NAME)
