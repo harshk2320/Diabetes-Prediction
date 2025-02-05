@@ -15,6 +15,13 @@ class DataValidationArtifact:
     message:str
     validation_report_file_path:str
 
+@dataclass      # Its is a python decorator which automatically takes method (__init__, __rep__ etc)
+                # Its is used for storing configurations without writing boiler codes
+class DataTransformationArtifact:
+    transformed_object_file_path: str
+    transformed_train_file_path: str
+    transformed_test_file_path: str
+
 
 
 # @dataclass
