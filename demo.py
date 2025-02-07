@@ -25,3 +25,10 @@ from src.pipline.training_pipeline import TrainPipeline
 
 pipeline = TrainPipeline()
 pipeline.run_pipeline()
+
+
+# from src.entity.artifact_entity import DataValidationArtifact, DataIngestionArtifact
+
+# # DataValidationArtifact.message
+# # print(DataValidationArtifact)
+# print(DataIngestionArtifact.test_file_path)

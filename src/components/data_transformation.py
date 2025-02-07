@@ -12,14 +12,15 @@ from src.constants import CURRENT_YEAR, TARGET_COLUMN, SCHEMA_FILE_PATH, DEPENDE
 from src.entity.config_entity import DataTransformationConfig
 from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
 from src.logger import logging
+from src.entity.artifact_entity import DataValidationArtifact
 from src.exception import MyException
 from src.utils.main_utils import save_object, save_numpy_array_data, read_yaml_file
 
 
-class DataTranformation:
-    def __init__(self, data_ingestion_artifact = DataIngestionArtifact,
-                data_transformation_config= DataTransformationConfig,
-                data_validation_artifact = DataValidationArtifact):
+class DataTransformation:
+    def __init__(self, data_ingestion_artifact: DataIngestionArtifact,
+                data_transformation_config: DataTransformationConfig,
+                data_validation_artifact: DataValidationArtifact):
 
         try:
             self.data_ingestion_artifact = data_ingestion_artifact
@@ -47,18 +48,18 @@ class DataTranformation:
 
         try:
             # Initializing transformers
-            numeric_scaler = StandardScaler()
+            numeric_transformer = StandardScaler()
             logging.info("Transformer Initialized: StandardScaler")
 
             num_features = self._schema_config["num_features"]
             logging.info("Columns loaded from schema")
 
             # Creating preprocessor pipeline
-            preprocessor = ColumnTransformer(transformers= ("StandardScaler", numeric_scaler),
+            preprocessor = ColumnTransformer(transformers= [("StandardScaler", numeric_transformer, num_features)],
                                              remainder= "passthrough")
             
             # Wrapping everything in a single Pipeline
-            final_pipeline = Pipeline(steps= ("Preprocessor", preprocessor))
+            final_pipeline = Pipeline(steps= [("Preprocessor", preprocessor)])
             logging.info("Final pipeline ready!!")
             logging.info("Exited get_data_transformation_object of DataTransformation class.")
             return final_pipeline
@@ -73,9 +74,9 @@ class DataTranformation:
         Dropping 'id' column if it exists
         """
         logging.info("Dropping id column.")
-        drop_col = self._schema_config["drop_columns"]
+        drop_col = self._schema_config['drop_columns']
         if drop_col in df.columns:
-            df = df.drop(columns= drop_col)
+            df = df.drop(drop_col, axis = 1)
         
         return df
     
@@ -98,7 +99,7 @@ class DataTranformation:
         logging.info("Removing null values.")
         knn_inputer = KNNImputer(n_neighbors= 6, weights= "distance")
         df = pd.DataFrame(knn_inputer.fit_transform(df), columns= df.columns)
-
+        print(df.isna().sum())
         return df
 
 
@@ -119,12 +120,24 @@ class DataTranformation:
         return df
     
 
+    # def initiate_data_transformation(self) -> DataTransformationArtifact:
+    #     """
+    #     Initiates the data transformation component of the pipeline.
+    #     """
+    #     # try:
+    #     logging.info("Data Transformation Started !!")
+    #     # if self.data_validation_artifact is not None:
+    #     #     print(self.data_validation_artifact.validation_status)
+    #     # else:
+    #     #     print("Error: my_object is None!")
+
+    #     # print(DataValidationArtifact)
     def initiate_data_transformation(self) -> DataTransformationArtifact:
         """
-        Initiates the data transformation component of the pipeline.
+        Initiates the data transformation component for the pipeline.
         """
         try:
-            logging.info("Data Transformation Started !!")
+            logging.info("Data Transformation Started !!!")
             if not self.data_validation_artifact.validation_status:
                 raise Exception(self.data_validation_artifact.message)
             
@@ -142,9 +155,9 @@ class DataTranformation:
 
             # Apply custom transformation in the specified sequence
             input_feature_train_df = self.drop_id_column(input_feature_train_df)
-            input_feature_test_df = self.handling_noise(input_feature_train_df)            
-            input_feature_test_df = self.handling_nulls(input_feature_train_df)
-            input_feature_test_df = self.handling_outliers(input_feature_train_df)
+            input_feature_train_df = self.handling_noise(input_feature_train_df)            
+            input_feature_train_df = self.handling_nulls(input_feature_train_df)
+            input_feature_train_df = self.handling_outliers(input_feature_train_df)
 
             input_feature_test_df = self.drop_id_column(input_feature_test_df)        
             input_feature_test_df = self.handling_noise(input_feature_test_df)
@@ -163,6 +176,8 @@ class DataTranformation:
             input_feature_test_arr = preprocesssor.transform(input_feature_test_df)
             logging.info("Transformation done end to end to train-test data.")
 
+            print(np.isnan(input_feature_train_arr).sum())
+            print(input_feature_train_arr.shape)
             logging.info("Applying SMOTEENN for handling imbalance dataset.")
             smt = SMOTEENN(sampling_strategy= "minority")
             input_feature_train_final, target_feature_train_final = smt.fit_resample(input_feature_train_arr,
@@ -183,7 +198,7 @@ class DataTranformation:
             logging.info("Saving transformation object and transformed files.")
 
             logging.info("Data transformation applied successfully")
-            return DataValidationArtifact(
+            return DataTransformationArtifact(
                 transformed_object_file_path = self.data_transformation_config.tranformed_object_file_path,
                 transformed_train_file_path = self.data_transformation_config.transformed_train_file_path,
                 transformed_test_file_path = self.data_transformation_config.transformed_test_file_path)

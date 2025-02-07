@@ -21,8 +21,7 @@ numerical_columns:
 - Age
 - Outcome
 
-drop_columns: 
-- _id
+drop_columns: _id
 
 # for data transformation
 num_features:
