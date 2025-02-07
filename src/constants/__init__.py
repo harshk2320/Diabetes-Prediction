@@ -11,6 +11,7 @@ ARTIFACT_DIR: str = "artifact"
 
 MODEL_FILE_NAME= "LR_BestModel_Diabetes.pkl"
 
+DEPENDENT_COLUMNS = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction", "Age"]
 TARGET_COLUMN = "Outcome"
 CURRENT_YEAR =  datetime.today().year
 PREPROCESSING_OBJECT_FILE_NAME= "preprocessing.pkl"
