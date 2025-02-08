@@ -2,7 +2,7 @@ import sys
 from typing import Tuple
 
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
 
 from src.exception import MyException
@@ -37,7 +37,7 @@ class ModelTrainer:
             logging.info("Training LogisticRegression with specified parametres.")
             x_train, y_train, x_test, y_test = train[:, :-1], train[:, -1], test[:, :-1], test[:, -1]
             logging.info("train-test split done.")
-            model = LinearRegression(
+            model = LogisticRegression(
                 fit_intercept= self.model_trainer_config._fit_intercept)
             
             # Fit the model
@@ -46,6 +46,8 @@ class ModelTrainer:
             logging.info("Model training done.")
 
             # Predictions and evaluation metrics
+            # y_pred_proba = model.predict_proba(x_test)[:, 1]  # Get probabilities for the positive class
+            # y_pred = (y_pred_proba >= 0.5).astype(int)
             y_pred = model.predict(x_test)
             accuracy = accuracy_score(y_test, y_pred)
             f1 = f1_score(y_test, y_pred)
@@ -90,7 +92,7 @@ class ModelTrainer:
             logging.info("Preprocessing obj loaded.")
 
             # Check if the model's accuracy meets the expected threshold
-            if accuracy_score(train_arr[:, -1], trained_model.predict(train_arr[:, :-1])) < self.model_trainer_config.expected_accuracy:
+            if accuracy_score(train_arr[:, -1], (trained_model.predict(train_arr[:, :-1])).astype(int)) < self.model_trainer_config.expected_accuracy:
                 logging.info("No model found with the score above the base score.")
                 raise Exception("No model found with the score above the base score.")
 
