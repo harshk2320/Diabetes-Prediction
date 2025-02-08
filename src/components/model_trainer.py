@@ -11,6 +11,7 @@ from src.constants import *
 from src.entity.config_entity import ModelTrainerConfig
 from src.entity.artifact_entity import DataTransformationArtifact, ClassificationMetricArtifact, ModelTrainerArtifact
 from src.entity.estimator import MyModel
+from src.utils.main_utils import *
 
 class ModelTrainer:
     def __init__(self, data_transformation_artifact: DataTransformationArtifact,
@@ -60,5 +61,51 @@ class ModelTrainer:
         except Exception as e:
             raise MyException(e, sys) from e
         
+
+    def initiate_model_trainer(self) -> ModelTrainerArtifact:
+        logging.info("Entered initiate_model_trainer method of ModelTrainer class.")
+
+        """
+        Method Name :   initiate_model_trainer
+        Description :   This function initiates the model training steps
+        
+        Output      :   Returns model trainer artifact
+        On Failure  :   Write an exception log and then raise an exception
+        """
+        try:
+            print("--------------------------------------------------------------------------------")
+            print("Starting Model Trainer Component.")
+
+            # Load tranform train and test data
+            train_arr = load_numpy_array_data(file_path= self.data_transformation_artifact.transformed_train_file_path)
+            test_arr = load_numpy_array_data(file_path= self.data_transformation_artifact.transformed_test_file_path)
+            logging.info("train-test data loaded")
+
+            # Train model and get metrics
+            trained_model, metric_artifact = self.get_model_object_and_report(train= train_arr, test= test_arr)
+            logging.info("Model object and artifact loaded.")
+
+            # Load preprocessing object
+            preprocessing_obj = load_object(self.data_transformation_artifact.transformed_object_file_path)
+            logging.info("Preprocessing obj loaded.")
+
+            # Check if the model's accuracy meets the expected threshold
+            if accuracy_score(train_arr[:, -1], trained_model.predict(train_arr[:, :-1])) < self.model_trainer_config.expected_accuracy:
+                logging.info("No model found with the score above the base score.")
+                raise Exception("No model found with the score above the base score.")
+
+            logging.info("Saving the new model as the performance is better.")
+            my_model = MyModel(preprocessing_object= preprocessing_obj, trained_model_object= trained_model)
+            save_object(self.model_trainer_config.trained_model_file_path, my_model)
+            logging.info("Saved final model object that includes both processing and the trained model.")
+
+            # Create and return the ModelTrainerArtifact
+            model_trainer_artifact = ModelTrainerArtifact(trained_model_artifact= self.model_trainer_config.trained_model_file_path,
+                                metric_artifact= metric_artifact)
+            logging.info(f"Model trainer artifact: {model_trainer_artifact}")
+            print(metric_artifact)
+            return model_trainer_artifact
+
+        except Exception as e:
+            raise MyException(e, sys) from e
             
-    
