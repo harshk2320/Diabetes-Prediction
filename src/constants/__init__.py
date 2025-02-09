@@ -57,7 +57,12 @@ MODEL_TRAINER_EXPECTED_SCORE:float = 0.6
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH:str = os.path.join("config", "model.yaml") 
 MODEL_TRAINER_FIT_INTERCEPT: bool = False
 
-
+"""
+Model Evaluation related constants 
+"""
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE : float = 0.02
+MODEL_BUCKET_NAME = "my-model-mlopsproj-diabetes-harsh"
+MODEL_PUSHER_S3_KEY = "model-registry"
 
 
 
