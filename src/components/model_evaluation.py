@@ -121,7 +121,7 @@ class ModelEvaluation:
         """
         try:
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
-            x, y = test_df.drop(TARGET_COLUMN, axis= 1), test_df(TARGET_COLUMN)
+            x, y = test_df.drop(TARGET_COLUMN, axis= 1), test_df[TARGET_COLUMN]
             logging.info("Test data loaded and now transforming it for predictions...")
             
             x = self.drop_id_column(x)
@@ -145,8 +145,8 @@ class ModelEvaluation:
             temp_best_model_f1_score = 0 if best_model_f1_score is None else best_model_f1_score
             result = EvaluateModelResponse(trainer_model_f1_score= trained_model_f1_score,
                                            best_model_f1_score= best_model_f1_score,
-                                           is_mode_accepted= trained_model_f1_score > best_model_f1_score,
-                                           difference= trained_model_f1_score - best_model_f1_score)
+                                           is_model_accepted= trained_model_f1_score > temp_best_model_f1_score,
+                                           difference= trained_model_f1_score - temp_best_model_f1_score)
             
             logging.info(f"Result: {result}")
             return result

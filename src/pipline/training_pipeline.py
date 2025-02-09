@@ -6,10 +6,11 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
+from src.components.model_evaluation import ModelEvaluation
 
-from src.entity.config_entity import (ModelTrainerConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig)
+from src.entity.config_entity import (ModelTrainerConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelEvaluationConfig)
 
-from src.entity.artifact_entity import (DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact)
+from src.entity.artifact_entity import (DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact)
 
 
 class TrainPipeline:
@@ -18,6 +19,8 @@ class TrainPipeline:
         self.data_validation_config = DataValidationConfig()
         self.data_transformation_config = DataTransformationConfig()
         self.model_trainer_config = ModelTrainerConfig()
+        self.model_evaluation_config = ModelEvaluationConfig()
+
     def start_data_ingestion(self) -> DataIngestionArtifact:
         """
         This method of the train pipeline is responsible for starting data ingestion component
@@ -34,7 +37,7 @@ class TrainPipeline:
         except Exception as e:
             raise MyException(e, sys) from e
         
-    def start_data_validation(self, data_ingestion_artifact = DataIngestionArtifact) -> DataValidationArtifact:
+    def start_data_validation(self, data_ingestion_artifact : DataIngestionArtifact) -> DataValidationArtifact:
         """
         This method of TrainPipeline class is responsible for starting data validation component.
         """
@@ -51,7 +54,7 @@ class TrainPipeline:
         except Exception as e:
             raise MyException(e, sys) from e
 
-    def start_data_transformation(self, data_ingestion_artifact = DataIngestionArtifact, data_validation_artifact = DataValidationArtifact) -> DataTransformationArtifact:
+    def start_data_transformation(self, data_ingestion_artifact : DataIngestionArtifact, data_validation_artifact : DataValidationArtifact) -> DataTransformationArtifact:
         """
         This method of TrainPipeline class is responsible for starting data transformation component
         """
@@ -80,7 +83,21 @@ class TrainPipeline:
         except Exception as e:
             raise MyException(e, sys) from e
         
-
+    def start_model_evaluation(self, data_ingestion_artifact: DataIngestionArtifact
+                               , model_trainer_artifact: ModelTrainerArtifact ) -> ModelEvaluationArtifact:
+        """
+        This method of TrainPipeline class is responsible fro starting model evaluation.
+        """
+        try:
+            model_evaluation = ModelEvaluation(model_evaluation_config= self.model_evaluation_config,
+                                               data_ingestion_artifact= data_ingestion_artifact,
+                                               model_trainer_artifact= model_trainer_artifact)
+            model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+            return model_evaluation_artifact
+        
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
     def run_pipeline(self, ) -> None:
         """
         This method is TrainPipeline class is responsible for running the pipeline
@@ -92,6 +109,12 @@ class TrainPipeline:
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact= data_ingestion_artifact,
                                            data_validation_artifact= data_validation_artifact)
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact= data_transformation_artifact)
-
+            model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact= data_ingestion_artifact, model_trainer_artifact= model_trainer_artifact)
+        
+            if not model_evaluation_artifact.is_model_accepted:
+                logging.info("Model not accepted.")
+                return None
+             
+        
         except Exception as e:
             raise MyException(e, sys)

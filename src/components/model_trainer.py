@@ -102,7 +102,7 @@ class ModelTrainer:
             logging.info("Saved final model object that includes both processing and the trained model.")
 
             # Create and return the ModelTrainerArtifact
-            model_trainer_artifact = ModelTrainerArtifact(trained_model_artifact= self.model_trainer_config.trained_model_file_path,
+            model_trainer_artifact = ModelTrainerArtifact(trained_model_file_path= self.model_trainer_config.trained_model_file_path,
                                 metric_artifact= metric_artifact)
             logging.info(f"Model trainer artifact: {model_trainer_artifact}")
             print(metric_artifact)
