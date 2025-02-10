@@ -70,3 +70,39 @@ class DiabetesData:
         except Exception as e:
             raise MyException(e, sys) from e
         
+
+class DiabetesDataClassifier:
+    """
+    The VehicleDataClassifier class is responsible for taking in the vehicle data (as a DataFrame)
+    and making predictions using a trained machine learning model.
+    """
+    
+    def __init__(self, prediction_pipeline_config: DiabetesPredictionConfig = DiabetesPredictionConfig()) -> None:
+        try:
+            self.prediction_pipeline_config = prediction_pipeline_config
+        
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
+    def predict(self, dataframe) -> str:
+        """
+        Purpose: This method takes in a dataframe (likely a pandas DataFrame containing the vehicle data), 
+        loads the trained model from the S3 bucket, and uses the model to make a prediction.
+
+        It initializes a Proj1Estimator object, which likely loads a pre-trained machine learning model from the S3 bucket.
+        It calls model.predict(dataframe) to make the prediction using the model and the input data.
+        Finally, it returns the result of the prediction (likely a class label or a numerical prediction, depending on the model).
+               
+        """
+
+        try:
+            logging.info("Entered predict method of DiabetesDataClassifier class.")
+            model = Proj1Estimator(bucket_name= self.prediction_pipeline_config.model_bucket_name,
+                                   model_path= self.prediction_pipeline_config.model_file_path)
+            
+            result = model.predict(dataframe)
+            return result
+        
+        except Exception as e:
+            raise MyException(e, sys) from e
+        
