@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <!-- Corrected the CSS path -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Prediction</h1>
+
+        <form method="post" action="/">
+            <label for="Pregnancies">Pregnancies:</label>
+            <input type="number" id="Pregnancies" name="Pregnancies" min="0" max="100" step="any" required>
+            
+            <label for="Glucose">Glucose:</label>
+            <input type="number" id="Glucose" name="Glucose" step="any" required>
+            
+            <label for="BloodPressure">BloodPressure:</label>
+            <input type="number" id="BloodPressure" name="BloodPressure" min="20" max="300" step="any" required>
+            
+            <label for="SkinThickness">SkinThickness:</label>
+            <input type="number" id="SkinThickness" name="SkinThickness" step="any" required>
+            
+            <label for="Insulin">Insulin:</label>
+            <input type="number" id="Insulin" name="Insulin" min="0" max="500" step="any" required>
+            
+            <label for="BMI">BMI:</label>
+            <input type="number" id="BMI" name="BMI" step="any" required>
+            
+            <label for="DiabetesPedigreeFunction">DiabetesPedigreeFunction:</label>
+            <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="any" required>
+            
+            <label for="Age">Age:</label>
+            <input type="number" id="Age" name="Age" step="any" required>
+            
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <form method="get" action="/train">
+            <button type="submit" class="train-button">Train Model</button>
+        </form>
+
+        {% if context %}
+            <div class="result">
+                <h2>Result: {{ context }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

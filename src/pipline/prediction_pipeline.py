@@ -3,14 +3,14 @@ import pandas as pd
 from pandas import DataFrame
 from src.logger import logging
 from src.exception import MyException
-from entity.s3_estimator import Proj1Estimator
+from src.entity.s3_estimator import Proj1Estimator
 from src.entity.config_entity import DiabetesPredictionConfig
 
 
 class DiabetesData:
 
     def __init__(self, Pregnancies, Glucose, BloodPressure, SkinThickness,
-                 Insulin, BMI, DiabetesPedigreeFunction, Age, Outcome):
+                 Insulin, BMI, DiabetesPedigreeFunction, Age):
         """
         Purpose: This function assigns these feature values to corresponding attributes of the class instance.
 
@@ -24,7 +24,6 @@ class DiabetesData:
             self.BMI = BMI
             self.DiabetesPedigreeFunction = DiabetesPedigreeFunction
             self.Age = Age
-            self.Outcome = Outcome
         
         
         except Exception as e:
@@ -46,8 +45,8 @@ class DiabetesData:
             "Insulin" : [self.Insulin],
             "BMI" : [self.BMI],
             "DiabetesPedigreeFunction" : [self.DiabetesPedigreeFunction], 
-            "Age" : [self.Age],
-            "Outcome" : [self.Outcome] 
+            "Age" : [self.Age]
+            
             }
 
             logging.info("Created Diabetes data dict.")

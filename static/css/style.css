@@ -1,0 +1,199 @@
+/* styles.css */
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #9400D3);  /* Rainbow gradient */
+    color: #fff;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(50, 50, 50, 0.85);  /* Darker transparent background */
+    padding: 50px;
+    border-radius: 24px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Darker shadow */
+    backdrop-filter: blur(10px);  /* Frosted glass effect */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 0.5s ease-out, box-shadow 0.4s ease;
+    animation: fadeIn 1.5s ease-out; /* Smooth fade-in effect */
+}
+
+.container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    color: #3A4F47;  /* Darker blue-gray for heading */
+    font-size: 3.5em;
+    margin-bottom: 30px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);  /* Stronger shadow */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.3;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+label {
+    text-align: left;
+    color: #A1B0A0;  /* Lighter gray-green for labels */
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+
+input, button {
+    padding: 16px 20px;
+    border: 1px solid #444;
+    border-radius: 12px;
+    font-size: 1.2em;
+    background-color: #2A2A2A;  /* Darker background for inputs */
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+
+input {
+    background-color: rgba(40, 40, 40, 0.9);
+    border: 2px solid transparent;
+    outline: none;
+    font-weight: 500;
+    font-family: 'Lora', serif;
+}
+
+input:focus {
+    border-color: #5F7F6E;  /* Darker mint green for focus border */
+    background-color: rgba(40, 40, 40, 1);
+    box-shadow: 0 0 15px rgba(95, 127, 110, 0.4); /* Glow effect */
+}
+
+button {
+    background: linear-gradient(45deg, #6A7F6B, #4F5F4B);  /* Dark green gradient */
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #5A6F56, #4F5F4B);  /* Slightly darker green hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+}
+
+.train-button {
+    background: linear-gradient(45deg, #6A7F6B, #5A6F56);  /* Dark green gradient */
+    margin-top: 30px;
+    font-weight: 700;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.train-button:hover {
+    background: linear-gradient(45deg, #5A6F56, #5A6F4A);  /* Darker green on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+}
+
+.result {
+    margin-top: 40px;
+    font-size: 1.3em;
+    color: #B4C8B0;  /* Light gray-green for results */
+    font-family: 'Lora', serif;
+    animation: slideIn 1.5s ease-out;
+    line-height: 1.6;
+}
+
+.result h2 {
+    color: #5F7F6E;  /* Darker green for result headings */
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    input, button {
+        font-size: 1.1em;
+    }
+
+    .train-button {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    input, button {
+        font-size: 1em;
+    }
+
+    .train-button {
+        margin-top: 15px;
+    }
+}
