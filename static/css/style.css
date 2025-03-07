@@ -6,8 +6,8 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient(135deg, #2A3D45, #354A53);  /* Initial background gradient */
-    color: #F4F4F4;  /* Light gray font color for readability */
+    background: linear-gradient(135deg, #E63946, #457B9D);  /* Updated gradient background */
+    color: #F1FAEE;  /* Light beige font color for readability */
     transition: background-color 1.5s ease, color 1.5s ease;  /* Smooth transition for background and text */
     overflow-x: hidden;
     animation: backgroundChange 6s infinite; /* Apply animation to change background every 1.5s */
@@ -15,19 +15,19 @@ body {
 
 @keyframes backgroundChange {
     0% {
-        background: linear-gradient(135deg, #2A3D45, #354A53);  /* Dark blue-green */
+        background: linear-gradient(135deg, #E63946, #457B9D);  /* Updated gradient */
     }
     25% {
-        background: linear-gradient(135deg, #3A4F57, #4D646C);  /* Lighter blue-green */
+        background: linear-gradient(135deg, #A8DADC, #457B9D);  /* Lighter blue gradient */
     }
     50% {
-        background: linear-gradient(135deg, #4C6C59, #2C3F3C);  /* Dark greenish tones */
+        background: linear-gradient(135deg, #457B9D, #1D3557);  /* Darker blue gradient */
     }
     75% {
-        background: linear-gradient(135deg, #3D5B5B, #2F4E4E);  /* Another greenish hue */
+        background: linear-gradient(135deg, #A8DADC, #457B9D);  /* Lighter blue gradient */
     }
     100% {
-        background: linear-gradient(135deg, #2A3D45, #354A53);  /* Back to initial gradient */
+        background: linear-gradient(135deg, #E63946, #457B9D);  /* Back to initial gradient */
     }
 }
 
@@ -53,7 +53,7 @@ body {
 }
 
 h1 {
-    color: #F4F4F4;  /* Light gray for heading to improve readability */
+    color: #F1FAEE;  /* Light beige for heading to improve readability */
     font-size: 3.5em;
     margin-bottom: 30px;
     font-weight: 800;
@@ -71,7 +71,7 @@ form {
 
 label {
     text-align: left;
-    color: #D0D0D0;  /* Lighter gray for labels */
+    color: #A8DADC;  /* Light blue-gray for labels */
     font-size: 1.1em;
     font-weight: 600;
     letter-spacing: 1px;
@@ -85,7 +85,7 @@ input, button {
     border-radius: 10px;
     font-size: 1.2em;
     background-color: #2A2A2A;  /* Dark input field background */
-    color: #F4F4F4;
+    color: #F1FAEE;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
     letter-spacing: 1px;
@@ -101,13 +101,13 @@ input {
 }
 
 input:focus {
-    border-color: #3D5B5B;  /* Darker teal for focus border */
+    border-color: #A8DADC;  /* Light blue-gray for focus border */
     background-color: rgba(40, 40, 40, 1);
     box-shadow: 0 0 15px rgba(61, 91, 91, 0.4); /* Focus glow effect */
 }
 
 button {
-    background: linear-gradient(45deg, #4C6C59, #2C3F3C);  /* Dark green gradient */
+    background: linear-gradient(45deg, #457B9D, #1D3557);  /* Blue gradient */
     color: white;
     cursor: pointer;
     font-weight: 700;
@@ -125,7 +125,7 @@ button:hover {
 }
 
 .train-button {
-    background: linear-gradient(45deg, #4C6C59, #3F5C50);  /* Dark green gradient */
+    background: linear-gradient(45deg, #457B9D, #1D3557);  /* Blue gradient */
     margin-top: 30px;
     font-weight: 700;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -141,14 +141,14 @@ button:hover {
 .result {
     margin-top: 40px;
     font-size: 1.3em;
-    color: #D0D0D0;  /* Lighter gray for results */
+    color: #A8DADC;  /* Light blue-gray for results */
     font-family: 'Lora', serif;
     animation: slideIn 1.5s ease-out;
     line-height: 1.6;
 }
 
 .result h2 {
-    color: #3D5B5B;  /* Deep teal for result headings */
+    color: #457B9D;  /* Blue for result headings */
     font-size: 1.8em;
     font-weight: 700;
     margin-bottom: 20px;
