@@ -15,3 +15,4 @@ EXPOSE 5000
 
 # Command to run FastAPI app
 CMD [ "python3", "app.py" ]
+
